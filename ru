@@ -15,8 +15,8 @@ type_to_image = {'programming': Image.open("pc.png"), 'health': Image.open("m.pn
                                                  #gmail_message
 #smtpobj = smtplib.SMTP('smtp.gmail.com', 587)
 #smtpobj.starttls()
-#smtpobj.login('anastasiya.schabanowa2014@gmail.com','NIkapirog992!')
-#smtpobj.sendmail("anastasiya.schabanowa2014@gmail.com", "massage here!")
+#smtpobj.login('anastasiya.schabanowa2014@gmail.com','№№№!')
+#smtpobj.sendmail("anastasiya.schabanowa2014@gmail.com", "№№№№!")
 #smtpObj.quit()
 
 
