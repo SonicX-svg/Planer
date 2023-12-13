@@ -15,8 +15,8 @@ type_to_image = {'programming': Image.open("pc.png"), 'health': Image.open("m.pn
                                                  #gmail_message
 #smtpobj = smtplib.SMTP('smtp.gmail.com', 587)
 #smtpobj.starttls()
-#smtpobj.login('anastasiya.schabanowa2014@gmail.com','№№№!')
-#smtpobj.sendmail("anastasiya.schabanowa2014@gmail.com", "№№№№!")
+#smtpobj.login('anastasiya.schabanowa2014@gmail.com','NIkapirog992!')
+#smtpobj.sendmail("anastasiya.schabanowa2014@gmail.com", "massage here!")
 #smtpObj.quit()
 
 
@@ -24,62 +24,60 @@ type_to_image = {'programming': Image.open("pc.png"), 'health': Image.open("m.pn
 
 #Работа с календарем удаление
 def updateLabel(a):
+    #settings_window()select()get_schedule()
+
     labelblue.config(text="Selected Date: " + tkc.get_date(), font=85)
     for i in frame3.winfo_children():                                          #тут др фрейм
         i.destroy()
     print('current dict state : ',dict_)
     curr_date = tkc.get_date()
     dict_for_variables = {}
-    for i in range( len(dict_[curr_date])):
-         dict_for_variables[curr_date] = dict_for_variables.get(curr_date,[]) + [IntVar()]
-         dict_for_variables[curr_date][i].set(dict_[curr_date][i][-1])
-    for i in range( len(dict_[curr_date])): #восстановление окна с задачами
-         current_task = dict_[curr_date][i][0] 
-         #current_task[-1].pack(fil=X, font=40)
-         print(current_task)
-         curr_frame = Frame(frame3,  background='white',borderwidth=0,highlightthickness=0,bd=0) 
-         curr_frame.pack(side='top',fill = X) 
-         #a = 'Checkbutton' + str(i) + '_'.join(curr_date.split('/'))
-         #locals()[a] = IntVar() # в a переменая кнопки
-         #dict_for_variables[curr_date] = dict_for_variables.get(curr_date,[]) + [eval(a)]
-         print('dict_for_variables', dict_for_variables)
-         #eval(a).set(dict_[curr_date][i][-1])
-         def callBackFunc():                 #обновление всех галочек по текущей дате
-             print('функция работает исправно')
-             n =0
-             print('dict_for_variables',dict_for_variables)
-             for form in frame3.winfo_children():
-                 for widget in form.winfo_children():
-                      #print(widget)
-                      #print(type(widget))
-                      if str(type(widget)) == "<class 'tkinter.Checkbutton'>":
-                          print('dict_for_variables[curr_date][n]',repr(dict_for_variables[curr_date][n]))
+    if curr_date in dict_:
+        for i in range( len(dict_[curr_date])):
+             dict_for_variables[curr_date] = dict_for_variables.get(curr_date,[]) + [IntVar()]
+             dict_for_variables[curr_date][i].set(dict_[curr_date][i][-1])
+        for i in range( len(dict_[curr_date])): #восстановление окна с задачами
+             current_task = dict_[curr_date][i][0] 
+             #current_task[-1].pack(fil=X, font=40)
+             print(current_task)
+             curr_frame = Frame(frame3,  background='white',borderwidth=0,highlightthickness=0,bd=0) 
+             curr_frame.pack(side='top',fill = X) 
+             #a = 'Checkbutton' + str(i) + '_'.join(curr_date.split('/'))
+             #locals()[a] = IntVar() # в a переменая кнопки
+             #dict_for_variables[curr_date] = dict_for_variables.get(curr_date,[]) + [eval(a)]
+             print('dict_for_variables', dict_for_variables)
+             #eval(a).set(dict_[curr_date][i][-1])
+             def callBackFunc():                 #обновление всех галочек по текущей дате
+                 print('функция работает исправно')
+                 n =0
+                 print('dict_for_variables',dict_for_variables)
+                 for form in frame3.winfo_children():
+                     for widget  in form.winfo_children():
+                          #print(widget)
+                          #print(type(widget))
+                          if str(type(widget)) == "<class 'tkinter.Checkbutton'>":
+                              print('dict_for_variables[curr_date][n]',repr(dict_for_variables[curr_date][n]))
                           print('dict_for_variables[curr_date][n].get()', dict_for_variables[curr_date][n].get())
                           #print('widget.variable.get()', widget.variable.get())
                           dict_[curr_date][n][-1] = dict_for_variables[curr_date][n].get()
                           print(dict_)
-                          n += 1
-
-                   
-         current_task = Checkbutton(curr_frame, text = current_task, font=45,bg='white',  
-                      variable = dict_for_variables[curr_date][i], 
-                      onvalue = 1, 
-                      offvalue = 0, highlightthickness=0,bd=0                         # command= callBackFunc aaaaaaaaaaaaaaaaaaaaa Checkbutton.command
-                      )
-         print('current_task.cget("text")',current_task.cget("text"))
-         current_task['command'] = callBackFunc
-         #print('dict_[curr_date][i]', dict_[curr_date][i] )
-         print()
-         #dict_[curr_date][i][-1] = eval(a).get()
-         print(dict_)
-         current_task.pack(side='left', padx=7)
-         print(dict_)
-         img = type_to_image[dict_[curr_date][i][1]]   #Image.open('mass.png') 
-         resized_image = img.resize((30, 30))
-         photo = ImageTk.PhotoImage(resized_image)
-         lab = Label(curr_frame, image=photo )
-         lab.image = photo
-         lab.pack(side='right')
+                          n += 1   
+             current_task = Checkbutton(curr_frame, text = current_task, font=45,bg='white',  variable = dict_for_variables[curr_date][i], onvalue = 1, offvalue = 0, highlightthickness=0,bd=0 )                        # command= callBackFunc aaaaaaaaaaaaaaaaaaaaa Checkbutton.command
+                          
+             print('current_task.cget("text")',current_task.cget("text"))
+             current_task['command'] = callBackFunc
+             #print('dict_[curr_date][i]', dict_[curr_date][i] )
+             print()
+             #dict_[curr_date][i][-1] = eval(a).get()
+             print(dict_)
+             current_task.pack(side='left', padx=7)
+             print(dict_)
+             img = type_to_image[dict_[curr_date][i][1]]   #Image.open('mass.png') 
+             resized_image = img.resize((30, 30))
+             photo = ImageTk.PhotoImage(resized_image)
+             lab = Label(curr_frame, image=photo )
+             lab.image = photo
+             lab.pack(side='right')
 
 
 #first run
@@ -122,47 +120,56 @@ def settings_window():
     frame1 = Frame(settings, bg='white')
     frame1.pack()   
     title = Label(frame1, text='Settings', font=my_font2, bg='white', highlightthickness=0, bd=0, pady=15).pack()
-    frame_email = Frame(settings, bg='blue', width=200, height=100)
+    frame_email = Frame(settings, bg='white', width=200, height=100)
     frame_email.pack(fill = BOTH, expand = True) 
     title = Label(frame_email, text='Enter your mail: ', font=my_font, bg='white', highlightthickness=0, bd=0, pady=15).pack(side=LEFT, fill = X)
-    entry = Entry(frame_email).pack(side=LEFT, fill = X)
-    frame_name = Frame(settings, bg='blue', width=200, height=100)
+    entry1 = Entry(frame_email, width=30)
+    entry1.pack(side=LEFT, fill = X)
+    frame_name = Frame(settings, bg='white', width=200, height=100)
     frame_name.pack(fill = BOTH, expand = True) 
     title = Label(frame_name, text='Enter your name: ', font=my_font, bg='white', highlightthickness=0, bd=0, pady=15).pack(side=LEFT, fill = X)
-    entry = Entry(frame_name).pack(side=LEFT, fill = X)    
-    frame_work = Frame(settings, bg='blue', width=200, height=100)
+    entry2 = Entry(frame_name, width=30)
+    entry2.pack(side=LEFT, fill = X)    
+    frame_work = Frame(settings, bg='white', width=200, height=100)
     frame_work.pack(fill = BOTH, expand = True) 
     title = Label(frame_work, text='Сhoose your work schedule: ', font=my_font, bg='white', highlightthickness=0, bd=0, pady=15).pack(side=LEFT, fill = X)
-    #frame_worktime = Frame(settings, bg='green', width=200, height=100).pack(side=LEFT, fill = X).pack()
+    #frame_worktime = Frame(settings, bg='white', width=200, height=100).pack(side=LEFT, fill = X).pack()
     counter = 0
     def select(selected):
          nonlocal counter
          counter +=1
          if counter >1: frame_worktime.destroy()
-         frame_worktime = Frame(settings, bg='green', width=200, height=100)
+         frame_worktime = Frame(settings, bg='white', width=200, height=100)
          frame_worktime.pack(side=LEFT, fill = X)
          title = Label(frame_worktime, text='Set your worktime (08:00 20:00): ', font=my_font, bg='white', highlightthickness=0, bd=0, pady=15).pack(side=LEFT, fill = X)
-         entry_start = Entry(frame_worktime).pack(side=LEFT, fill = X)
-         entry_end = Entry(frame_worktime).pack(side=LEFT, fill = X) 
+         entry_start = Entry(frame_worktime)
+         entry_start.pack(side=LEFT, fill = X)
+         entry_end = Entry(frame_worktime)
+         entry_end.pack(side=LEFT, fill = X) 
          title = Label(frame_worktime, text='Last workday: ', font=my_font, bg='white', highlightthickness=0, bd=0, pady=15).pack(side=LEFT, fill = X)
          datentry = DateEntry(frame_worktime)
-
          datentry.pack(side=LEFT, fill = X)
-
-
+         def saving_and_destroy():
+             settings_list  = [entry1.get(), entry2.get(), btn.get(), datentry.get_date(), entry_start.get(), entry_end.get()]
+             with open('settings', mode='w') as f:
+                  f.write(str(settings_list))
+             settings.withdraw()
+         btnn = Button(frame_worktime, text="OK",padx=30, command=saving_and_destroy).pack(side=RIGHT, fill = BOTH)
+         
          list_of_workdays = [] 
-        
-         def get_schedule(A): # работа над заполнением рабочих дней
-             print('HELLO')
-             print(list_of_workdays)
-  
+         
+         #print(settings_list)
+         def get_schedule(*A): # работа над заполнением рабочих дней
+             date = datentry.get_date()
+             date_last = date +  timedelta(days=int(selected.split('/')[-1])+1)  
+             if A:
+                  selected = settings[2]
+                  date = settings[3]
              if list_of_workdays:
                  tkc.calevent_remove(*list_of_workdays)
-             #nonlocal selected
-             #nonlocal lastworkday
              step = int(selected.split('/')[-1])
              step_weekend = int(selected.split('/')[0])-1
-             date_last = datentry.get_date() +  timedelta(days=int(selected.split('/')[-1])+1)                 #последний введеный выходной день 
+             #последний введеный выходной день 
              for i in range(130):
                  for j in range(int(selected.split('/')[0])):
                      work_event = tkc.calevent_create(date=date_last, text='EVENT HERE', tags='tag')
@@ -179,7 +186,7 @@ def settings_window():
         select(selected)
     list_ = ['5/2', '1/3', '2/2']
     for schedule in list_:
-        schedule = Radiobutton(frame_work, text=schedule, value=schedule, variable=btn, command=f)
+        schedule = Radiobutton(frame_work, text=schedule, value=schedule, variable=btn, command=f, bg='white')
         schedule.pack(side=LEFT, fill = X)
 
      
@@ -363,6 +370,9 @@ print('cick')
 
 updateLabel('a')
 
+
+
+root.mainloop()
 
 
 root.mainloop()
