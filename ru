@@ -80,7 +80,8 @@ class ScrollableFrame(ttk.Frame):
 def updateLabel(a):
     #settings_window()select()get_schedule()
     list_menus = {}
-    get_schedule()
+    if os.stat("settings.txt").st_size != 0: 
+         get_schedule()
     labelblue.config(text="Selected Date: " + tkc.get_date(), font=85)
     for i in frame3.winfo_children():                                          #тут др фрейм
         i.destroy()
@@ -219,10 +220,16 @@ def hello():
 
 
 def get_schedule(*A): # работа над заполнением рабочих дней функция проставляет даты рабочих дней при загрузке
-             with open('settings') as f:
-                 settings_list = eval(f.readlines()[0])
-                 print('settings_list',settings_list)
-             
+             with open('settings.txt') as fe:
+                 #print('fe.read()',fe.read(), 'type(fe.read()) = = ', type(fe.read()))
+                 if os.stat("settings.txt").st_size != 0:
+                     text = fe.read()
+                     print('text = ',text)
+                     settings_list = eval(text)
+                 else: settings_list = []
+                 print('settings_list',settings_list) 
+             tkc.calevent_remove()   #удаляет все события календары. можно указать список необходимых к удаленю
+             print('settings_list ==', settings_list)
              date = datetime(*map(int, settings_list[3].split('-')))
              selected = settings_list[2]
              print('selected', selected)
@@ -230,16 +237,19 @@ def get_schedule(*A): # работа над заполнением рабочи�
            #  if list_of_workdays:
             #     tkc.calevent_remove(*list_of_workdays)
              step = int(selected.split('/')[-1])
-             step_weekend = int(selected.split('/')[0])-1
+             #step_weekend = int(selected.split('/')[0])-1
              #последний введеный выходной день 
              for i in range(130):
                  for j in range(int(selected.split('/')[0])):
-                     work_event = tkc.calevent_create(date=date_last, text='EVENT HERE', tags='tag')
+                     print('date_last', date_last)
+                     work_event = tkc.calevent_create(date=date_last, text='WorkDay', tags='tag')
                      tkc.tag_config('tag', background='azure2', foreground='dodgerblue4')
                      #list_of_workdays.append(work_event)
                      date_last = date_last + timedelta(days=1)
                  date_last = date_last + timedelta(days=step)
-
+             #frame.update()
+             #root.update()
+             tkc.update()
 
 
 
@@ -281,9 +291,12 @@ def settings_window():
          datentry.pack(side=LEFT, fill = X)
          def saving_and_destroy():
              settings_list  = [entry1.get(), entry2.get(), btn.get(), str(datentry.get_date()), entry_start.get(), entry_end.get()]
-             with open('settings', mode='w') as f:
+             with open('settings.txt', mode='w') as f:
                   f.write(str(settings_list))
+             get_schedule()
              settings.withdraw()
+             updateLabel('a')
+             root.deiconify()
          btnn = Button(frame_worktime, text="OK",padx=30, command=saving_and_destroy).pack(side=RIGHT, fill = BOTH)
          
        #  list_of_workdays = [] 
@@ -291,7 +304,7 @@ def settings_window():
          #print(settings_list)
           
                  
-         datentry.bind('<<DateEntrySelected>>', get_schedule)    
+         #datentry.bind('<<DateEntrySelected>>', get_schedule)    
                  
     btn = StringVar()
     def f(): 
@@ -441,11 +454,15 @@ settings.geometry("1000x480")
 root.protocol("WM_DELETE_WINDOW", record)
 
 
-#root.wm_withdraw() #скрываем окно до окончания настройки
+root.wm_withdraw() #скрываем окно до окончания настройки
+
 settings.wm_withdraw() #скрываем окно до окончания настройки
 my_font2 = font.Font(family= "Arial", size=17,weight='bold')
 my_font = font.Font(family= "Arial", size=17, weight="normal")
-hello()
+if os.stat("settings.txt").st_size == 0:
+    hello()
+else:
+    root.deiconify()
 frame = Frame(root, bg='white', width=200, height=200)
 frame.pack(fill = BOTH, expand = True, side=RIGHT)
 
