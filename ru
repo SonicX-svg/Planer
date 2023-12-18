@@ -372,23 +372,26 @@ def func1():
 
     def goal_or_task(a, b=False):
 
-        if combobox.get() == 'Task' or b==True:
+        if combobox.get() == 'Task' :
+              for i in newWindow.winfo_children()[1:]:                                          #тут др фрейм
+                  i.destroy()
               def fetch():
-                  task_name, task_type = tasky.get(), combobox1.get()
-                  global number
-                  dict_[stroka] = dict_.get(stroka, []) + [[task_name, task_type, editor.get(1.0, END), False]]
-                  print(dict_)
-                  number += 1
-                  updateLabel('a')
+                  if tasky.get():
+                      task_name, task_type = tasky.get(), combobox1.get()
+                      global number
+                      dict_[stroka] = dict_.get(stroka, []) + [[task_name, task_type, editor.get(1.0, END), False]]
+                      print(dict_)
+                      number += 1
+                      updateLabel('a')
                   newWindow.destroy()
-              def edit():
-                  task_name, task_type = tasky.get(), combobox1.get()
-                  dict_[curr_date][i] =  [task_name, task_type, editor.get(1.0, END), False]
-                  newWindow.destroy()
+              #def edit():
+                  #task_name, task_type = tasky.get(), combobox1.get()
+                  #dict_[curr_date][i] =  [task_name, task_type, editor.get(1.0, END), False]
+                  #newWindow.destroy()
               newWindow.update()
               frameall = Frame(newWindow, background='white')
               frameall.pack( fill = BOTH, expand = True)
-              framegv = Frame(frameall, background='blue')
+              framegv = Frame(frameall, background='white')
               framegv.pack(side=LEFT, fill = BOTH, expand = True)
               frame11 = Frame(framegv, background='white')
               frame11.pack(fill = BOTH, expand = True)
@@ -399,7 +402,7 @@ def func1():
               tasky.pack(side=LEFT)
               frame22 = Frame(framegv, background='white')
               frame22.pack(fill = BOTH, expand = True)
-              frame33 = Frame(frameall, background='red')
+              frame33 = Frame(frameall, background='white')
               frame33.pack(side=RIGHT,fill = BOTH, expand = True)
               task_description = Label(frame33,text="Task_description", bg='white')
               task_description.pack(side=TOP, fill=X)
@@ -413,7 +416,7 @@ def func1():
               combobox1 = ttk.Combobox(frame22, values=tasks_types, background='white')
               combobox1.pack(side=LEFT)
               Button(newWindow, text='add task', command=fetch).pack(anchor='se')
-              newWindow.protocol("WM_DELETE_WINDOW", updateLabel)                        #close window trigger
+              newWindow.protocol("WM_DELETE_WINDOW", updateLabel('a'))                        #close window trigger
         elif combobox.get() == 'Goal':
               newWindow.update()
              
@@ -517,3 +520,6 @@ updateLabel('a')
 
 
 root.mainloop()
+
+
+
