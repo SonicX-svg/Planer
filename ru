@@ -80,7 +80,7 @@ class ScrollableFrame(ttk.Frame):
 def updateLabel(a):
     #settings_window()select()get_schedule()
     list_menus = {}
-    if os.stat("settings.txt").st_size != 0: 
+    if os.stat("settings.txt").st_size > 5: 
          get_schedule()
     labelblue.config(text="Selected Date: " + tkc.get_date(), font=85)
     for i in frame3.winfo_children():                                          #тут др фрейм
@@ -223,14 +223,14 @@ def get_schedule(*A): # работа над заполнением рабочи�
              with open('settings.txt') as fe:
                  #print('fe.read()',fe.read(), 'type(fe.read()) = = ', type(fe.read()))
                  print('os.stat("settings.txt").st_size ', os.stat("settings.txt").st_size )
-                 if os.stat("settings.txt").st_size != 0:
+                 if os.stat("settings.txt").st_size > 5 :
                      text = fe.read()
                      print('text = ',text)
                      settings_list = eval(text)
                  else: settings_list = []
                  #print('settings_list',settings_list) 
              tkc.calevent_remove()   #удаляет все события календары. можно указать список необходимых к удаленю
-             #print('settings_list ==', settings_list)
+             print('settings_list ==', settings_list)
              date = datetime(*map(int, settings_list[3].split('-')))
              selected = settings_list[2]
             # print('selected', selected)
@@ -464,7 +464,7 @@ root.wm_withdraw() #скрываем окно до окончания настр
 settings.wm_withdraw() #скрываем окно до окончания настройки
 my_font2 = font.Font(family= "Arial", size=17,weight='bold')
 my_font = font.Font(family= "Arial", size=17, weight="normal")
-if os.stat("settings.txt").st_size == 0:
+if os.stat("settings.txt").st_size < 5:
     hello()
 else:
     root.deiconify()
@@ -522,5 +522,6 @@ updateLabel('a')
 
 
 root.mainloop()
+
 
 
