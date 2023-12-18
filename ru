@@ -85,7 +85,7 @@ def updateLabel(a):
     labelblue.config(text="Selected Date: " + tkc.get_date(), font=85)
     for i in frame3.winfo_children():                                          #тут др фрейм
         i.destroy()
-    print('current dict state : ',dict_)
+    #print('current dict state : ',dict_)
     curr_date = tkc.get_date()
     dict_for_variables = {}
 
@@ -101,13 +101,13 @@ def updateLabel(a):
         for i in range( len(dict_[curr_date])): #восстановление окна с задачами
              current_task = dict_[curr_date][i][0] 
              #current_task[-1].pack(fil=X, font=40)
-             print(current_task)
+             #print(current_task)
              curr_frame = Frame(scrollbar.scrollable_frame,  background='white',borderwidth=0,highlightthickness=0,bd=0) 
              curr_frame.pack(side='top',fill = X) 
              #a = 'Checkbutton' + str(i) + '_'.join(curr_date.split('/'))
              #locals()[a] = IntVar() # в a переменая кнопки
              #dict_for_variables[curr_date] = dict_for_variables.get(curr_date,[]) + [eval(a)]
-             print('dict_for_variables', dict_for_variables)
+             #print('dict_for_variables', dict_for_variables)
              #eval(a).set(dict_[curr_date][i][-1])
              def callBackFunc():                 #обновление всех галочек по текущей дате
                  print('функция работает исправно')
@@ -122,7 +122,7 @@ def updateLabel(a):
                           #print('widget.variable.get()', widget.variable.get())
                          # print()
                           dict_[curr_date][n][-1] = dict_for_variables[curr_date][n].get()
-                          print(dict_)
+                          #print(dict_)
                           n += 1   
              def greener():  
                      rgb = [(144,223, 144), (118,216,118), (94, 209, 94), (73, 203, 73), (56, 195, 56), (51,177,51), (46,159,46), (41,143,41), (37, 129, 37),(33, 116, 33), (30,104,30)]
@@ -131,7 +131,7 @@ def updateLabel(a):
                      step_color = len(dict_[curr_date])//len(rgb)
                      _from_rgb(rgb)
                      current_color = _from_rgb(rgb[sum([i[-1] for i in dict_[curr_date]])//step_color])
-                     print('current_color',current_color)
+                     #print('current_color',current_color)
                      green_event = tkc.calevent_create(date=curr_date, text='greener', tags='tag')
                      tkc.tag_config('tag', background=current_color, foreground='white')
              
@@ -151,7 +151,7 @@ def updateLabel(a):
              deletebtn = menubutton.menu.add_checkbutton(label = "Delete", 
                                 variable = list_menus[curr_date][i][0], command=delete)
              #deletebtn.bind(<>,)
-             print('deletebtn type is', type(deletebtn))
+             #print('deletebtn type is', type(deletebtn))
              #editbtn = menubutton.menu.add_checkbutton(label = "Edit", 
                              #   variable = list_menus[curr_date][i][1])
                 
@@ -169,14 +169,14 @@ def updateLabel(a):
              current_task.bind("<Enter>", description )
              #current_task.bind("<Leave>", lambda event: event.widget.config(bg="white", fg="navy"))
              
-             print('current_task.cget("text")',current_task.cget("text"))
+             #print('current_task.cget("text")',current_task.cget("text"))
              current_task['command'] = callBackFunc
              #print('dict_[curr_date][i]', dict_[curr_date][i] )
              print()
              #dict_[curr_date][i][-1] = eval(a).get()
-             print(dict_)
+             #print(dict_)
              current_task.pack(side='left', padx=7)
-             print(dict_)
+             #print(dict_)
              img = type_to_image[dict_[curr_date][i][1]]   #Image.open('mass.png') 
              resized_image = img.resize((30, 30))
              photo = ImageTk.PhotoImage(resized_image)
@@ -222,17 +222,18 @@ def hello():
 def get_schedule(*A): # работа над заполнением рабочих дней функция проставляет даты рабочих дней при загрузке
              with open('settings.txt') as fe:
                  #print('fe.read()',fe.read(), 'type(fe.read()) = = ', type(fe.read()))
+                 print('os.stat("settings.txt").st_size ', os.stat("settings.txt").st_size )
                  if os.stat("settings.txt").st_size != 0:
                      text = fe.read()
                      print('text = ',text)
                      settings_list = eval(text)
                  else: settings_list = []
-                 print('settings_list',settings_list) 
+                 #print('settings_list',settings_list) 
              tkc.calevent_remove()   #удаляет все события календары. можно указать список необходимых к удаленю
-             print('settings_list ==', settings_list)
+             #print('settings_list ==', settings_list)
              date = datetime(*map(int, settings_list[3].split('-')))
              selected = settings_list[2]
-             print('selected', selected)
+            # print('selected', selected)
              date_last = date +  timedelta(days=int(selected.split('/')[-1])+1)  
            #  if list_of_workdays:
             #     tkc.calevent_remove(*list_of_workdays)
@@ -241,7 +242,7 @@ def get_schedule(*A): # работа над заполнением рабочи�
              #последний введеный выходной день 
              for i in range(130):
                  for j in range(int(selected.split('/')[0])):
-                     print('date_last', date_last)
+                     #print('date_last', date_last)
                      work_event = tkc.calevent_create(date=date_last, text='WorkDay', tags='tag')
                      tkc.tag_config('tag', background='azure2', foreground='dodgerblue4')
                      #list_of_workdays.append(work_event)
@@ -380,7 +381,7 @@ def func1():
                       task_name, task_type = tasky.get(), combobox1.get()
                       global number
                       dict_[stroka] = dict_.get(stroka, []) + [[task_name, task_type, editor.get(1.0, END), False]]
-                      print(dict_)
+                      #print(dict_)
                       number += 1
                       updateLabel('a')
                   newWindow.destroy()
@@ -408,7 +409,7 @@ def func1():
               task_description.pack(side=TOP, fill=X)
               editor = Text(frame33, width=25, height=5,bg="darkgreen", fg='white', wrap=WORD)
               editor.pack(fill=BOTH, expand=1)
-              print('!!!!!!!!!!!!!!!!!!!!!!!!',frame22 )
+              #print('!!!!!!!!!!!!!!!!!!!!!!!!',frame22 )
               types_of_tasks = Label(frame22, text='Set the type', bg='white')
               types_of_tasks.pack(side=LEFT, fill = BOTH)
               #tasky.bind('<Return>', fetch)
@@ -431,13 +432,14 @@ def record():
         f.write(data)
         root.destroy()
 def read_dict():
+    print('os.stat("settings.txt").st_size ', os.stat("settings.txt").st_size )
     isempty = os.stat('your_story.txt').st_size 
     print('isempty', isempty)
     if isempty != 0:
         with open('your_story.txt') as f:
             global dict_
             dict_ = eval(f.readlines()[0])
-            print('HERE===========',type(dict_))
+            #print('HERE===========',type(dict_))
 
 read_dict()
 root = Tk()
@@ -520,6 +522,5 @@ updateLabel('a')
 
 
 root.mainloop()
-
 
 
