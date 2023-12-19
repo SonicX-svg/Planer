@@ -459,7 +459,7 @@ icon = PhotoImage(file="aaa.png")
 icon1 = PhotoImage(file="bb.png")
 root.iconphoto(True, icon)
 #root.eval('tk::PlaceWindow . center')
-root.wm_attributes('-alpha', 0.7)
+root.wm_attributes('-alpha', 1.0)
 root.geometry('980x400')
     #create settings window:
 settings = Toplevel(root)
