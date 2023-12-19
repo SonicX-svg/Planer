@@ -1,0 +1,9 @@
+__pycache__\
+settings.txt
+your_story.txt
+.Python
+.cache
+.env
+.venv
+env/
+venv/
