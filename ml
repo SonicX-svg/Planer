@@ -1,17 +1,18 @@
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-#from ru import *
+from datetime import *
 model_name = "IlyaGusev/fred_t5_ru_turbo_alpaca"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForSeq2SeqLM.from_pretrained(model_name).to("cuda")
 model.eval()
 
 with open('your_story.txt', mode='r') as file:
-      tasks_dict = eval(file.read)
-      today_tasks = tasks_dict[datetime.now().date]
-input = []
+      text = file.read()
+      tasks_dict = eval(text)
+      today_tasks = tasks_dict[datetime.now().date().strftime('%m/%d/%y')]
+inputs = []
 for list in today_tasks:
     a = f'Задание: Сочини короткое сообщение, обязательно упоминая следующие слова.\n{list[0]}'
-    input.append(a)
+    inputs.append(a)
 
 from transformers import GenerationConfig
 
