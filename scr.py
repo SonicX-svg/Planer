@@ -10,6 +10,7 @@ from datetime import timedelta
 from datetime import datetime, date
 #from datetime import *
 import os
+import runpy
 sring_my = '''\n\n\n\nHello!\n\nI am called to rescue you from the hellish chaos of life. Where you can define your path, divide it into stages, understand the possibilities of time and your pace. And what is very important, you can see all the work done and admire yourself.\n\nI'll always keep you posted.'''
 type_to_image = {'programming': Image.open("pc.png"), 'health': Image.open("m.png"), 'erudition': Image.open("cr.png"), 'work':Image.open("money.png"), 'cleanliness': Image.open("c.png")}
 dict_greener = {}  
@@ -386,7 +387,7 @@ def func1():
                       updateLabel('a')
                       record_()
                       newWindow.destroy()
-                      import email_and_ml
+                      runpy.run_module(mod_name="email_and_ml") 
                   newWindow.destroy()
                       
                       
