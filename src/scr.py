@@ -1,3 +1,4 @@
+#Импортируем необходимые модули
 from tkinter import *
 import geocoder
 from tkcalendar import Calendar, DateEntry
@@ -16,6 +17,8 @@ type_to_image = {'programming': Image.open("pc.png"), 'health': Image.open("m.pn
 dict_greener = {}  
 
     
+#Инициируем необходимые классы
+#Инициируем класс виджета с инструментами
 class Tooltip:
     def __init__(self, widget, text):
         self.widget = widget
@@ -42,7 +45,7 @@ class Tooltip:
             self.tooltip = None
 
 
-
+#Инициируем класс окна
 class ScrollableFrame(ttk.Frame):
     def __init__(self, container, *args, **kwargs):
         super().__init__(container, *args, **kwargs)
@@ -81,11 +84,11 @@ def updateLabel(a):
     scrollbar.pack(fill=BOTH, expand = True)
     
     if curr_date in dict_:
-        for i in range( len(dict_[curr_date])):
+        for i in range(len(dict_[curr_date])):
              dict_for_variables[curr_date] = dict_for_variables.get(curr_date,[]) + [IntVar()]
              dict_for_variables[curr_date][i].set(dict_[curr_date][i][-1])
              list_menus[curr_date] = list_menus.get(curr_date,[]) + [[IntVar(),IntVar()]]
-        for i in range( len(dict_[curr_date])): #восстановление окна с задачами
+        for i in range(len(dict_[curr_date])): #восстановление окна с задачами
              current_task = dict_[curr_date][i][0] 
              curr_frame = Frame(scrollbar.scrollable_frame,  background='white',borderwidth=0,highlightthickness=0,bd=0) 
              curr_frame.pack(side='top',fill = X) 
@@ -145,7 +148,7 @@ def updateLabel(a):
              lab.pack(side='right')
              menubutton.pack(side='right') 
 
-#first run
+#fЗауск приветственного окна с информацией пользователю о приложении
 def hello():
     global tkc
     hello = Toplevel(root)
@@ -175,9 +178,9 @@ def hello():
     btn.configure(width=200, height=100)
     btn.pack(anchor='se')    	    
 
-
+#Загружаем сохраненный календарь пользователя + основные параметры
 def get_schedule(*A): # работа над заполнением рабочих дней функция проставляет даты рабочих дней при загрузке
-             with open('settings.txt') as fe:
+             with open('settings.txt') as fe: #загружаем из файла
                  print('os.stat("settings.txt").st_size ', os.stat("settings.txt").st_size )
                  if os.stat("settings.txt").st_size > 5 :
                      text = fe.read()
@@ -275,6 +278,7 @@ number = 0
 position = 0
 dict_ = {}
 
+#Функция добавления задачи в календарь
 def func1():
     stroka = tkc.get_date()
     newWindow = Toplevel(root)
@@ -333,7 +337,8 @@ def func1():
               newWindow.update()       
     goal_or_task('a',  b=True)                 
     combobox.bind("<<ComboboxSelected>>", goal_or_task)
-    
+
+#Сохранение календаря
 def record():
     with open('your_story.txt', 'w') as f:
         data = str(dict_)
@@ -419,8 +424,11 @@ btn.pack(side=LEFT, padx=17, pady=1)
 user_name = Label(frame2, text='wheather', font=25, bg='white', highlightthickness=0,bd=0)
 user_name.pack(side=LEFT)
 my_font2 = font.Font(family= "Arial", size=10,weight='bold')
+
+#функция отправки почты
+#модуль с моделью генерации текста письма вынесен в отдельный файл
 def send_mail():
-    runpy.run_module(mod_name="email_and_ml") 
+    runpy.run_module(mod_name="email_and_ml")  #запускаем  модель
 btn_for_email = Button(frame2,text="Send mail", bg='white',highlightthickness=2,bd=1, font=my_font2, command=send_mail )
 btn_for_email.config(highlightbackground = "blue violet", highlightcolor= "blue violet")
 btn_for_email.pack(side=RIGHT, padx=19)
