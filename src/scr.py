@@ -47,28 +47,30 @@ class Tooltip:
 
 
 #Инициируем класс окна
-class ScrollableFrame(ttk.Frame):
-    def __init__(self, container, *args, **kwargs):
+class ScrollableFrame(ttk.Frame): 
+    def __init__(self, container, *args, **kwargs):  # Конструктор класса, который наследуется от ttk.Frame.
         super().__init__(container, *args, **kwargs)
-        self.canvas = Canvas(self, bg='white')
+        self.canvas = Canvas(self, bg='white') # Создает холст (Canvas) для отображения содержимого с белым фоном.
         self.canvas.pack(fill = BOTH, expand = True)
-        scrollbar = Scrollbar(self, orient="vertical", command=self.canvas.yview, bg='green', bd=0, troughcolor='white')
-        self.scrollable_frame = Frame(self.canvas, bg='white')
-
-        self.scrollable_frame.bind( "<Configure>",self.OnFrameConfigure)
+        scrollbar = Scrollbar(self, orient="vertical", command=self.canvas.yview, bg='green', bd=0, troughcolor='white') # Создает вертикальный ползунок для прокрутки, связанный с холстом.
+        self.scrollable_frame = Frame(self.canvas, bg='white') # Создает внутренний фрейм, который будет содержать прокручиваемое содержимое.
         
+        # Привязка событий
+        self.scrollable_frame.bind( "<Configure>",self.OnFrameConfigure) 
+        
+        # Настройка виджетов
         self.canvas_frame = self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
         self.canvas.configure(yscrollcommand=scrollbar.set)
         self.canvas.bind('<Configure>', self.FrameWidth)
         self.canvas.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
         root.bind_all("<MouseWheel>", self._on_mousewheel)
-    def FrameWidth(self, event):
+    def FrameWidth(self, event): #  обновляет ширину внутреннего фрейма в соответствии с изменением ширины холста.
             canvas_width = event.width
             self.canvas.itemconfig(self.canvas_frame, width = canvas_width)
-    def OnFrameConfigure(self, event):
+    def OnFrameConfigure(self, event): # обновляет область прокрутки холста
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
-    def _on_mousewheel(self, event):
+    def _on_mousewheel(self, event): #прокрутки содержимого вертикально при использовании колеса мыши.
         self.canvas.yview_scroll(int(-1*(event.delta/120)), "units")
 #Работа с календарем удаление
 def updateLabel(a):
