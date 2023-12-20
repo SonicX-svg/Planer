@@ -15,11 +15,6 @@ sring_my = '''\n\n\n\nHello!\n\nI am called to rescue you from the hellish chaos
 type_to_image = {'programming': Image.open("pc.png"), 'health': Image.open("m.png"), 'erudition': Image.open("cr.png"), 'work':Image.open("money.png"), 'cleanliness': Image.open("c.png")}
 dict_greener = {}  
 
-
-def _from_rgb(rgb):
-    """translates an rgb tuple of int to a tkinter friendly color code"""
-    r, g, b = rgb
-    return f'#{r:02x}{g:02x}{b:02x}'
     
 class Tooltip:
     def __init__(self, widget, text):
@@ -73,14 +68,12 @@ class ScrollableFrame(ttk.Frame):
         self.canvas.yview_scroll(int(-1*(event.delta/120)), "units")
 #Работа с календарем удаление
 def updateLabel(a):
-    #settings_window()select()get_schedule()
     list_menus = {}
     if os.stat("settings.txt").st_size > 5: 
          get_schedule()
     labelblue.config(text="Selected Date: " + tkc.get_date(), font=85)
     for i in frame3.winfo_children():                                          #тут др фрейм
         i.destroy()
-    #print('current dict state : ',dict_)
     curr_date = tkc.get_date()
     dict_for_variables = {}
 
@@ -262,11 +255,6 @@ def settings_window():
         schedule.pack(side=LEFT, fill = X)
 
      
-    
-
-
-
-
 
 def func():                         # Определяет геолокацию и погоду
      BASE_URL = "https://api.open-meteo.com/v1/forecast"
@@ -308,7 +296,6 @@ def func1():
                       task_name, task_type = tasky.get(), combobox1.get()
                       global number
                       dict_[stroka] = dict_.get(stroka, []) + [[task_name, task_type, editor.get(1.0, END), False]]
-                      #print(dict_)
                       number += 1
                       updateLabel('a')
                       record_()
@@ -323,7 +310,6 @@ def func1():
               framegv.pack(side=LEFT, fill = BOTH, expand = True)
               frame11 = Frame(framegv, background='white')
               frame11.pack(fill = BOTH, expand = True)
-              print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', newWindow)
               taskname = Label(frame11, text='Set the task', bg='white')
               taskname.pack(side=LEFT, fill = BOTH)
               tasky = Entry(frame11, width=35)
@@ -336,10 +322,8 @@ def func1():
               task_description.pack(side=TOP, fill=X)
               editor = Text(frame33, width=25, height=5,bg="darkgreen", fg='white', wrap=WORD)
               editor.pack(fill=BOTH, expand=1)
-              #print('!!!!!!!!!!!!!!!!!!!!!!!!',frame22 )
               types_of_tasks = Label(frame22, text='Set the type', bg='white')
               types_of_tasks.pack(side=LEFT, fill = BOTH)
-              #tasky.bind('<Return>', fetch)
               tasks_types = ['programming', 'health', 'erudition', 'work', 'cleanliness']
               combobox1 = ttk.Combobox(frame22, values=tasks_types, background='white')
               combobox1.pack(side=LEFT)
@@ -406,7 +390,6 @@ tkc.bind('<<CalendarSelected>>', updateLabel) #нажатие на дату
 
 
 frame1 = Frame(root, bg='white', width=200, height=200)
-#frame.configure(width=520, height=500)
 frame1.pack(fill = BOTH, expand = True, side=RIGHT)
 frame4 = Frame(frame1, bg='white')
 frame4.pack(side='top',fill = X)
@@ -429,11 +412,9 @@ frame2 = Frame(frame, bg='white', width=100, height=100)
 frame2.pack(side='top', fill = X, pady=13)
 
 #кнопка с фото
-#title = Label(frame2, bg='white')
 btn = Button(frame2, text='Создать задачу', bg='white', image=photo, command=func)
 btn.configure(width=28, height=28)
 btn.pack(side=LEFT, padx=17, pady=1)
-#title.pack(side='left')
 
 user_name = Label(frame2, text='wheather', font=25, bg='white', highlightthickness=0,bd=0)
 user_name.pack(side=LEFT)
