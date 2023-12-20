@@ -1,17 +1,17 @@
 #Импортируем необходимые модули
-from tkinter import *
-import geocoder
-from tkcalendar import Calendar, DateEntry
-from tkinter import Label, Tk, ttk
-from PIL import Image, ImageTk
-import requests
-from tkinter import font
-import smtplib
-from datetime import timedelta
-from datetime import datetime, date
+from tkinter import *  # библиотекa для разработки графического интерфейса
+import geocoder  # библиотека для геокодирования
+from tkcalendar import Calendar, DateEntry  # модуль для создания календаря и списка
+from tkinter import Label, Tk, ttk # для создания кнопок
+from PIL import Image, ImageTk # библиотека для исспользования изображений
+import requests  # библиотека для работы с запросами
+from tkinter import font # для установки шрифтов
+import smtplib # для отправки почты
+from datetime import timedelta # для установки нитервала времени
+from datetime import datetime, date # для установки даты
 #from datetime import *
-import os
-import runpy
+import os # для работы с файловой системой ПК
+import runpy # для запуска модулей из файловой системы.
 sring_my = '''\n\n\n\nHello!\n\nI am called to rescue you from the hellish chaos of life. Where you can define your path, divide it into stages, understand the possibilities of time and your pace. And what is very important, you can see all the work done and admire yourself.\n\nI'll always keep you posted.'''
 type_to_image = {'programming': Image.open("pc.png"), 'health': Image.open("m.png"), 'erudition': Image.open("cr.png"), 'work':Image.open("money.png"), 'cleanliness': Image.open("c.png")}
 dict_greener = {}  
