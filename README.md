@@ -9,7 +9,7 @@
 - прогноз погоды в твоем городе.
 
 **Главная особенность** приложения - частые и забавные напоминания, которые генерирует предобученная языковая модель\
-[Описание модели]([ссылка](https://huggingface.co/Helsinki-NLP/opus-mt-ru-en)) 
+[Описание модели]([https://huggingface.co/Helsinki-NLP/opus-mt-ru-en]) 
 Модель Helsinki-NLP/opus-mt-ru-en из библиотеки HugginFace (https://huggingface.co/Helsinki-NLP/opus-mt-ru-en).
 Описание:
 Эта модель используется для перевода и преобразования текста в текст.
