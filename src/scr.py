@@ -19,15 +19,16 @@ dict_greener = {}
     
 #Инициируем необходимые классы
 #Инициируем класс виджета с инструментами
-class Tooltip:
-    def __init__(self, widget, text):
+
+class Tooltip: 
+    def __init__(self, widget, text): # Конструктор класса Tooltip, который принимает виджет (widget) и текст (text) для отображения 
         self.widget = widget
         self.text = text
         self.tooltip = None
         self.widget.bind("<Enter>", self.show)
         self.widget.bind("<Leave>", self.hide)
 
-    def show(self, event=None):
+    def show(self, event=None): # позволяет создавать виджет с указанным текстом (text) при наведении курсора (<Enter>),
         x, y, _, _ = self.widget.bbox("insert")
         x += self.widget.winfo_rootx() + 25
         y += self.widget.winfo_rooty() + 25
@@ -39,7 +40,7 @@ class Tooltip:
         label = ttk.Label(self.tooltip, text=self.text, background="white", relief="solid", borderwidth=0)
         label.pack()
 
-    def hide(self, event=None):
+    def hide(self, event=None): # для закрывания виджета при уходе курсора (<Leave>).
         if self.tooltip:
             self.tooltip.destroy()
             self.tooltip = None
