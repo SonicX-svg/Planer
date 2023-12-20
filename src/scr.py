@@ -75,15 +75,15 @@ class ScrollableFrame(ttk.Frame):
 #Работа с календарем удаление
 def updateLabel(a):
     list_menus = {}
-    if os.stat("settings.txt").st_size > 5: 
-         get_schedule()
+    if os.stat("settings.txt").st_size > 5:  # Проверяется размер файла "settings.txt". Если размер больше 5 байт, вызывается функция get_schedule().
+         get_schedule() 
     labelblue.config(text="Selected Date: " + tkc.get_date(), font=85)
-    for i in frame3.winfo_children():                                          #тут др фрейм
+    for i in frame3.winfo_children():  #  удаляет содержимое виджета frame3                                   #тут др фрейм
         i.destroy()
-    curr_date = tkc.get_date()
+    curr_date = tkc.get_date() # Получает текущую дату и сохраняет ее в переменную curr_date.
     dict_for_variables = {}
 
-    scrollbar = ScrollableFrame(frame3)
+    scrollbar = ScrollableFrame(frame3) # Создается экземпляр класса ScrollableFrame и упаковывается в frame3
     scrollbar.pack(fill=BOTH, expand = True)
     
     if curr_date in dict_:
@@ -112,9 +112,9 @@ def updateLabel(a):
                      green_event = tkc.calevent_create(date=curr_date, text='greener', tags='tag')
                      tkc.tag_config('tag', background=current_color, foreground='white')
              
-                
+            #    Создается флажок (Checkbutton), который представляет собой отдельную задачу.
              current_task = Checkbutton(curr_frame, text = current_task, font=45,bg='white',  variable = dict_for_variables[curr_date][i], onvalue = 1, offvalue = 0, highlightthickness=0,bd=0 , command=greener)                        # command= callBackFunc aaaaaaaaaaaaaaaaaaaaa Checkbutton.command
-             def delete():
+             def delete(): # выполняет удаление задач
                  for i in range(len(list_menus[curr_date])):
                      if list_menus[curr_date][i][0].get() == 1:
                          del dict_[curr_date][i]
@@ -128,7 +128,7 @@ def updateLabel(a):
                                 variable = list_menus[curr_date][i][0], command=delete)
 
                 
-             def description(event):
+             def description(event): # отображение  описания задачи при наведении курсора на соответствующий виджет
                  numb = 0
                  for curr_frame in scrollbar.scrollable_frame.winfo_children():
                      for widget in curr_frame.winfo_children():
@@ -138,11 +138,12 @@ def updateLabel(a):
          
                  Tooltip(event.widget, dict_[curr_date][result_numb][-2])
                  
-                 
+            # Настройка метки текущих задач   
              current_task.bind("<Enter>", description )
              current_task['command'] = callBackFunc
              current_task.pack(side='left', padx=7)
-
+            
+            # добавлям изображение к задачам
              img = type_to_image[dict_[curr_date][i][1]]   #Image.open('mass.png') 
              resized_image = img.resize((30, 30))
              photo = ImageTk.PhotoImage(resized_image)
@@ -151,7 +152,7 @@ def updateLabel(a):
              lab.pack(side='right')
              menubutton.pack(side='right') 
 
-#fЗауск приветственного окна с информацией пользователю о приложении
+#Запуск приветственного окна с информацией пользователю о приложении
 def hello():
     global tkc
     hello = Toplevel(root)
@@ -190,7 +191,7 @@ def get_schedule(*A): # работа над заполнением рабочи�
                      print('text = ',text)
                      settings_list = eval(text)
                  else: settings_list = []
-             tkc.calevent_remove()   #удаляет все события календары. можно указать список необходимых к удаленю
+             tkc.calevent_remove()   #удаляет все события календаря. можно указать список необходимых к удаленю
              print('settings_list ==', settings_list)
              date = datetime(*map(int, settings_list[3].split('-')))
              selected = settings_list[2]
