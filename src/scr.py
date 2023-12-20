@@ -228,7 +228,7 @@ def settings_window():
     frame_work.pack(fill = BOTH, expand = True) 
     title = Label(frame_work, text='Сhoose your work schedule: ', font=my_font, bg='white', highlightthickness=0, bd=0, pady=15).pack(side=LEFT, fill = X)
     counter = 0
-    def select(selected):
+    def select(selected): # cоздаем поле для заполнения рабочего времени.
          nonlocal counter
          counter +=1
          if counter >1: frame_worktime.destroy()
@@ -244,7 +244,7 @@ def settings_window():
          datentry.pack(side=LEFT, fill = X)
          def saving_and_destroy():
              settings_list  = [entry1.get(), entry2.get(), btn.get(), str(datentry.get_date()), entry_start.get(), entry_end.get()]
-             with open('settings.txt', mode='w') as f:
+             with open('settings.txt', mode='w') as f: # Записываем список задач в "settings.txt"
                   f.write(str(settings_list))
              get_schedule()
              settings.withdraw()
