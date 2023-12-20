@@ -15,12 +15,6 @@ sring_my = '''\n\n\n\nHello!\n\nI am called to rescue you from the hellish chaos
 type_to_image = {'programming': Image.open("pc.png"), 'health': Image.open("m.png"), 'erudition': Image.open("cr.png"), 'work':Image.open("money.png"), 'cleanliness': Image.open("c.png")}
 dict_greener = {}  
 
-                                             #gmail_message
-#smtpobj = smtplib.SMTP('smtp.gmail.com', 587)
-#smtpobj.starttls()
-#smtpobj.login('anastasiya.schabanowa2014@gmail.com','NIkapirog992!')
-#smtpobj.sendmail("anastasiya.schabanowa2014@gmail.com", "massage here!")
-#smtpObj.quit()
 
 def _from_rgb(rgb):
     """translates an rgb tuple of int to a tkinter friendly color code"""
@@ -91,7 +85,6 @@ def updateLabel(a):
     dict_for_variables = {}
 
     scrollbar = ScrollableFrame(frame3)
-    #scrollbar.scrollable_frame.config()
     scrollbar.pack(fill=BOTH, expand = True)
     
     if curr_date in dict_:
@@ -101,29 +94,14 @@ def updateLabel(a):
              list_menus[curr_date] = list_menus.get(curr_date,[]) + [[IntVar(),IntVar()]]
         for i in range( len(dict_[curr_date])): #восстановление окна с задачами
              current_task = dict_[curr_date][i][0] 
-             #current_task[-1].pack(fil=X, font=40)
-             #print(current_task)
              curr_frame = Frame(scrollbar.scrollable_frame,  background='white',borderwidth=0,highlightthickness=0,bd=0) 
              curr_frame.pack(side='top',fill = X) 
-             #a = 'Checkbutton' + str(i) + '_'.join(curr_date.split('/'))
-             #locals()[a] = IntVar() # в a переменая кнопки
-             #dict_for_variables[curr_date] = dict_for_variables.get(curr_date,[]) + [eval(a)]
-             #print('dict_for_variables', dict_for_variables)
-             #eval(a).set(dict_[curr_date][i][-1])
              def callBackFunc():                 #обновление всех галочек по текущей дате
                  print('функция работает исправно')
                  n =0
                  print('dict_for_variables',dict_for_variables)
                  for i in range(len(dict_[curr_date])):
-                          #print(widget)
-                          #print(type(widget))
-                          #if str(type(widget)) == "<class 'tkinter.Checkbutton'>":
-                             # print('dict_for_variables[curr_date][n]',repr(dict_for_variables[curr_date][n]))
-                          #print('dict_for_variables[curr_date][n].get()', dict_for_variables[curr_date][n].get())
-                          #print('widget.variable.get()', widget.variable.get())
-                         # print()
                           dict_[curr_date][n][-1] = dict_for_variables[curr_date][n].get()
-                          #print(dict_)
                           n += 1   
              def greener():  
                      rgb = [(144,223, 144), (118,216,118), (94, 209, 94), (73, 203, 73), (56, 195, 56), (51,177,51), (46,159,46), (41,143,41), (37, 129, 37),(33, 116, 33), (30,104,30)]
@@ -132,7 +110,6 @@ def updateLabel(a):
                      step_color = len(dict_[curr_date])//len(rgb)
                      _from_rgb(rgb)
                      current_color = _from_rgb(rgb[sum([i[-1] for i in dict_[curr_date]])//step_color])
-                     #print('current_color',current_color)
                      green_event = tkc.calevent_create(date=curr_date, text='greener', tags='tag')
                      tkc.tag_config('tag', background=current_color, foreground='white')
              
@@ -141,7 +118,6 @@ def updateLabel(a):
              def delete():
                  for i in range(len(list_menus[curr_date])):
                      if list_menus[curr_date][i][0].get() == 1:
-                         #del list_menus[curr_date][i]
                          del dict_[curr_date][i]
                          scrollbar.scrollable_frame.winfo_children()[i].destroy()
                  
@@ -151,10 +127,7 @@ def updateLabel(a):
              menubutton["menu"]= menubutton.menu  
              deletebtn = menubutton.menu.add_checkbutton(label = "Delete", 
                                 variable = list_menus[curr_date][i][0], command=delete)
-             #deletebtn.bind(<>,)
-             #print('deletebtn type is', type(deletebtn))
-             #editbtn = menubutton.menu.add_checkbutton(label = "Edit", 
-                             #   variable = list_menus[curr_date][i][1])
+
                 
              def description(event):
                  numb = 0
@@ -168,16 +141,9 @@ def updateLabel(a):
                  
                  
              current_task.bind("<Enter>", description )
-             #current_task.bind("<Leave>", lambda event: event.widget.config(bg="white", fg="navy"))
-             
-             #print('current_task.cget("text")',current_task.cget("text"))
              current_task['command'] = callBackFunc
-             #print('dict_[curr_date][i]', dict_[curr_date][i] )
-             print()
-             #dict_[curr_date][i][-1] = eval(a).get()
-             #print(dict_)
              current_task.pack(side='left', padx=7)
-             #print(dict_)
+
              img = type_to_image[dict_[curr_date][i][1]]   #Image.open('mass.png') 
              resized_image = img.resize((30, 30))
              photo = ImageTk.PhotoImage(resized_image)
@@ -193,18 +159,15 @@ def hello():
     root['bg'] = 'white'
     hello.title("Hellper_2.0")
     hello.geometry("1000x480")
-    #hello.eval('tk::PlaceWindow . center')
     frame1 = Frame(hello, bg='white', width=200, height=200)
     frame1.pack(fill = BOTH, expand = True, side='left')
     frame2 = Frame(hello, bg='white', width=200, height=200)
     frame2.pack(fill = BOTH, expand = True, side='left')
     global icon1 
-    #photo = ImageTk.PhotoImage(image)
     Label(frame1, image=icon1, bg='white').pack(fill = BOTH, expand = True, padx=12)
     global my_font 
     noteditor = Text(frame2,wrap='word', bg='white', font=my_font, highlightthickness = 0, borderwidth=0, height=14)
     noteditor.pack(fill=BOTH, expand=1,  padx=35)
-   #noteditor.insert(5.5, 'Hello!')
     global sring_my
     noteditor.insert(7.0, sring_my)
     noteditor.config(state=DISABLED)
@@ -222,35 +185,24 @@ def hello():
 
 def get_schedule(*A): # работа над заполнением рабочих дней функция проставляет даты рабочих дней при загрузке
              with open('settings.txt') as fe:
-                 #print('fe.read()',fe.read(), 'type(fe.read()) = = ', type(fe.read()))
                  print('os.stat("settings.txt").st_size ', os.stat("settings.txt").st_size )
                  if os.stat("settings.txt").st_size > 5 :
                      text = fe.read()
                      print('text = ',text)
                      settings_list = eval(text)
                  else: settings_list = []
-                 #print('settings_list',settings_list) 
              tkc.calevent_remove()   #удаляет все события календары. можно указать список необходимых к удаленю
              print('settings_list ==', settings_list)
              date = datetime(*map(int, settings_list[3].split('-')))
              selected = settings_list[2]
-            # print('selected', selected)
              date_last = date +  timedelta(days=int(selected.split('/')[-1])+1)  
-           #  if list_of_workdays:
-            #     tkc.calevent_remove(*list_of_workdays)
              step = int(selected.split('/')[-1])
-             #step_weekend = int(selected.split('/')[0])-1
-             #последний введеный выходной день 
              for i in range(130):
                  for j in range(int(selected.split('/')[0])):
-                     #print('date_last', date_last)
                      work_event = tkc.calevent_create(date=date_last, text='WorkDay', tags='tag')
                      tkc.tag_config('tag', background='azure2', foreground='dodgerblue4')
-                     #list_of_workdays.append(work_event)
                      date_last = date_last + timedelta(days=1)
                  date_last = date_last + timedelta(days=step)
-             #frame.update()
-             #root.update()
              tkc.update()
 
 
@@ -275,7 +227,6 @@ def settings_window():
     frame_work = Frame(settings, bg='white', width=200, height=100)
     frame_work.pack(fill = BOTH, expand = True) 
     title = Label(frame_work, text='Сhoose your work schedule: ', font=my_font, bg='white', highlightthickness=0, bd=0, pady=15).pack(side=LEFT, fill = X)
-    #frame_worktime = Frame(settings, bg='white', width=200, height=100).pack(side=LEFT, fill = X).pack()
     counter = 0
     def select(selected):
          nonlocal counter
@@ -300,14 +251,7 @@ def settings_window():
              updateLabel('a')
              root.deiconify()
          btnn = Button(frame_worktime, text="OK",padx=30, command=saving_and_destroy).pack(side=RIGHT, fill = BOTH)
-         
-       #  list_of_workdays = [] 
-         
-         #print(settings_list)
-          
-                 
-         #datentry.bind('<<DateEntrySelected>>', get_schedule)    
-                 
+             
     btn = StringVar()
     def f(): 
         selected = btn.get()
@@ -339,30 +283,12 @@ def func():                         # Определяет геолокацию 
      user_name['text'] =  str(g.city) + ' : '+str(data['daily']['temperature_2m_max'][1])
      
 
-
-
-
-
-#get_schedule(tkc) #вызываю функцию заполнения рабочими днями
-
-#add events
-#print(datetime.strptime(tkc.get_date(), '%m/%d/%y'))
-#print(f'tags names - {tkc.tag_names()}')
-
-#color of event
-#print(f'tags names - {tkc.tag_names()}')
-#event_my = tkc.calevent_create(date=datetime.strptime(tkc.get_date(), '%m/%d/%y'), text='EVENT HERE', tags='tag')
-#tkc.tag_config('tag', background='azure3', foreground='white')
-#print(tkc.get_calevents(date=datetime.strptime(tkc.get_date(), '%m/%d/%y'), tag=None))
-
 number = 0
 position = 0
 dict_ = {}
+
 def func1():
     stroka = tkc.get_date()
-    
-
-        
     newWindow = Toplevel(root)
     newWindow.title("Add your task/goal")
     newWindow.geometry("700x300")
@@ -390,10 +316,6 @@ def func1():
                   newWindow.destroy()
                       
                       
-              #def edit():
-                  #task_name, task_type = tasky.get(), combobox1.get()
-                  #dict_[curr_date][i] =  [task_name, task_type, editor.get(1.0, END), False]
-                  #newWindow.destroy()
               newWindow.update()
               frameall = Frame(newWindow, background='white')
               frameall.pack( fill = BOTH, expand = True)
@@ -424,11 +346,8 @@ def func1():
               Button(newWindow, text='add task', command=fetch).pack(anchor='se')
               newWindow.protocol("WM_DELETE_WINDOW", updateLabel('a'))                        #close window trigger
         elif combobox.get() == 'Goal':
-              newWindow.update()
-             
-    goal_or_task('a',  b=True)            
-              
-            
+              newWindow.update()       
+    goal_or_task('a',  b=True)                 
     combobox.bind("<<ComboboxSelected>>", goal_or_task)
     
 def record():
@@ -448,7 +367,6 @@ def read_dict():
         with open('your_story.txt') as f:
             global dict_
             dict_ = eval(f.readlines()[0])
-            #print('HERE===========',type(dict_))
 
 read_dict()
 root = Tk()
@@ -457,7 +375,6 @@ root['bg'] = '#fafafa'
 icon = PhotoImage(file="aaa.png")
 icon1 = PhotoImage(file="bb.png")
 root.iconphoto(True, icon)
-#root.eval('tk::PlaceWindow . center')
 root.wm_attributes('-alpha', 1)
 root.geometry('980x400')
     #create settings window:
