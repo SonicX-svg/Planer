@@ -12,9 +12,12 @@ from datetime import datetime, date # для установки даты
 #from datetime import *
 import os # для работы с файловой системой ПК
 import runpy # для запуска модулей из файловой системы.
+#Текст информации о приложении
 sring_my = '''\n\n\n\nHello!\n\nI am called to rescue you from the hellish chaos of life. Where you can define your path, divide it into stages, understand the possibilities of time and your pace. And what is very important, you can see all the work done and admire yourself.\n\nI'll always keep you posted.'''
+#Вводим словарь действий и привязываем к ним иконки
 type_to_image = {'programming': Image.open("pc.png"), 'health': Image.open("m.png"), 'erudition': Image.open("cr.png"), 'work':Image.open("money.png"), 'cleanliness': Image.open("c.png")}
-dict_greener = {}  
+#Создаем пустой словарь для раскраски запланированных дней в планере
+dict_greener = {}
 
     
 #Инициируем необходимые классы
@@ -76,24 +79,25 @@ class ScrollableFrame(ttk.Frame):
 def updateLabel(a):
     list_menus = {}
     if os.stat("settings.txt").st_size > 5:  # Проверяется размер файла "settings.txt". Если размер больше 5 байт, вызывается функция get_schedule().
-         get_schedule() 
+         get_schedule() #Запускаем функцию планера
     labelblue.config(text="Selected Date: " + tkc.get_date(), font=85)
     for i in frame3.winfo_children():  #  удаляет содержимое виджета frame3                                   #тут др фрейм
         i.destroy()
-    curr_date = tkc.get_date() # Получает текущую дату и сохраняет ее в переменную curr_date.
+    curr_date = tkc.get_date() # Получает  дату и сохраняет ее в переменную curr_date.
     dict_for_variables = {}
 
     scrollbar = ScrollableFrame(frame3) # Создается экземпляр класса ScrollableFrame и упаковывается в frame3
     scrollbar.pack(fill=BOTH, expand = True)
     
-    if curr_date in dict_:
-        for i in range(len(dict_[curr_date])):
-             dict_for_variables[curr_date] = dict_for_variables.get(curr_date,[]) + [IntVar()]
-             dict_for_variables[curr_date][i].set(dict_[curr_date][i][-1])
-             list_menus[curr_date] = list_menus.get(curr_date,[]) + [[IntVar(),IntVar()]]
-        for i in range(len(dict_[curr_date])): #восстановление окна с задачами
-             current_task = dict_[curr_date][i][0] 
-             curr_frame = Frame(scrollbar.scrollable_frame,  background='white',borderwidth=0,highlightthickness=0,bd=0) 
+    if curr_date in dict_: #Проверяем выбранный в календаре день на наличие его в справочнике с сохраненными задачами
+        for i in range(len(dict_[curr_date])): #Проходим циклом по всему справочнику - отбираем задачи на этот день
+             dict_for_variables[curr_date] = dict_for_variables.get(curr_date,[]) + [IntVar()] #Получаем список переменных в отдельный список
+             dict_for_variables[curr_date][i].set(dict_[curr_date][i][-1]) #Копируем построчно
+             list_menus[curr_date] = list_menus.get(curr_date,[]) + [[IntVar(),IntVar()]] # Формируем список для меню
+        for i in range(len(dict_[curr_date])): #Восстановление окна с задачами
+             current_task = dict_[curr_date][i][0] #Формируем списолк задач на дату
+             #Помещаем задачи в фрейм для визуализации
+             curr_frame = Frame(scrollbar.scrollable_frame,  background='white',borderwidth=0,highlightthickness=0,bd=0)
              curr_frame.pack(side='top',fill = X) 
              def callBackFunc():                 #обновление всех галочек по текущей дате
                  print('функция работает исправно')
@@ -102,30 +106,32 @@ def updateLabel(a):
                  for i in range(len(dict_[curr_date])):
                           dict_[curr_date][n][-1] = dict_for_variables[curr_date][n].get()
                           n += 1   
-             def greener():  
+             def greener(): #Функция раскрашивания календаря
+                     #Задаем справочник палитры цветов
                      rgb = [(144,223, 144), (118,216,118), (94, 209, 94), (73, 203, 73), (56, 195, 56), (51,177,51), (46,159,46), (41,143,41), (37, 129, 37),(33, 116, 33), (30,104,30)]
-                     
+                     #Справочник дат с соответствующими цветами закрашивания
                      dict_greener[curr_date] = dict_greener.get(curr_date, []) + rgb
                      step_color = len(dict_[curr_date])//len(rgb)
                      _from_rgb(rgb)
                      current_color = _from_rgb(rgb[sum([i[-1] for i in dict_[curr_date]])//step_color])
+                     #Закрашиваем календарь
                      green_event = tkc.calevent_create(date=curr_date, text='greener', tags='tag')
                      tkc.tag_config('tag', background=current_color, foreground='white')
              
             #    Создается флажок (Checkbutton), который представляет собой отдельную задачу.
              current_task = Checkbutton(curr_frame, text = current_task, font=45,bg='white',  variable = dict_for_variables[curr_date][i], onvalue = 1, offvalue = 0, highlightthickness=0,bd=0 , command=greener)                        # command= callBackFunc aaaaaaaaaaaaaaaaaaaaa Checkbutton.command
-             def delete(): # выполняет удаление задач
+             def delete(): # Функция для удаления задачи
                  for i in range(len(list_menus[curr_date])):
                      if list_menus[curr_date][i][0].get() == 1:
                          del dict_[curr_date][i]
                          scrollbar.scrollable_frame.winfo_children()[i].destroy()
                  
-                     
+             #Создаем кнопки меню
              menubutton = Menubutton(curr_frame, text = "...", bg='white')    
              menubutton.menu = Menu(menubutton)   
-             menubutton["menu"]= menubutton.menu  
+             menubutton["menu"]= menubutton.menu   #Кнопка Меню
              deletebtn = menubutton.menu.add_checkbutton(label = "Delete", 
-                                variable = list_menus[curr_date][i][0], command=delete)
+                                variable = list_menus[curr_date][i][0], command=delete) #Кнопка Удалить
 
                 
              def description(event): # отображение  описания задачи при наведении курсора на соответствующий виджет
@@ -145,9 +151,9 @@ def updateLabel(a):
             
             # добавлям изображение к задачам
              img = type_to_image[dict_[curr_date][i][1]]   #Image.open('mass.png') 
-             resized_image = img.resize((30, 30))
-             photo = ImageTk.PhotoImage(resized_image)
-             lab = Label(curr_frame, image=photo )
+             resized_image = img.resize((30, 30)) #
+             photo = ImageTk.PhotoImage(resized_image) #
+             lab = Label(curr_frame, image=photo ) #
              lab.image = photo 
              lab.pack(side='right')
              menubutton.pack(side='right') 
@@ -171,13 +177,14 @@ def hello():
     global sring_my
     noteditor.insert(7.0, sring_my)
     noteditor.config(state=DISABLED)
-    def open_settings():
+    def open_settings(): #Задаем настройки для окна планера
         global tkc
         hello.withdraw()
         settings_window()
     frame3 = Frame(frame2, bg='green', width=200, height=100)
     frame3.pack(fill = BOTH, expand = True, side='bottom')   
     global my_font2
+    #Задаем кнопку "Настройки"
     btn = Button(frame3, bg='white', text='start settings', font=my_font2, foreground='red', justify=RIGHT, command=open_settings, highlightthickness = 0, borderwidth=0)
     btn.configure(width=200, height=100)
     btn.pack(anchor='se')    	    
@@ -186,17 +193,21 @@ def hello():
 def get_schedule(*A): # работа над заполнением рабочих дней функция проставляет даты рабочих дней при загрузке
              with open('settings.txt') as fe: #загружаем из файла
                  print('os.stat("settings.txt").st_size ', os.stat("settings.txt").st_size )
-                 if os.stat("settings.txt").st_size > 5 :
+                 if os.stat("settings.txt").st_size > 5 : # Если в файле есть хоть 1 стрка настроек (5 элементов) то открываем файл
                      text = fe.read()
                      print('text = ',text)
                      settings_list = eval(text)
-                 else: settings_list = []
+                 else: settings_list = [] #Если файл пустой, то создаем пустой справочник для сохранения настроек
              tkc.calevent_remove()   #удаляет все события календаря. можно указать список необходимых к удаленю
              print('settings_list ==', settings_list)
+             #Берем из справочника дату (4 элемент в списке)
              date = datetime(*map(int, settings_list[3].split('-')))
+             #Выбранный элемент
              selected = settings_list[2]
-             date_last = date +  timedelta(days=int(selected.split('/')[-1])+1)  
+             #
+             date_last = date +  timedelta(days=int(selected.split('/')[-1])+1)
              step = int(selected.split('/')[-1])
+             #Заполняем календарь из справочника
              for i in range(130):
                  for j in range(int(selected.split('/')[0])):
                      work_event = tkc.calevent_create(date=date_last, text='WorkDay', tags='tag')
@@ -288,13 +299,13 @@ def func1():
     newWindow = Toplevel(root)
     newWindow.title("Add your task/goal")
     newWindow.geometry("700x300")
-    class_tasks = ['Goal','Task']
-    combobox = ttk.Combobox(newWindow, values=class_tasks)
+    class_tasks = ['Goal','Task'] #Список для типа задачи
+    combobox = ttk.Combobox(newWindow, values=class_tasks) #Типы задача или цель получаем из списка созданного ранее
     combobox.pack() 
     combobox.insert(0, 'Task')
       
 
-    def goal_or_task(a, b=False):
+    def goal_or_task(a, b=False): #Функция работы с целью или задачей
 
         if combobox.get() == 'Task' :
               for i in newWindow.winfo_children()[1:]:                                          #тут др фрейм
