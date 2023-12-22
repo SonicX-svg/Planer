@@ -278,10 +278,10 @@ def func():                         # Определяет геолокацию 
      BASE_URL = "https://api.open-meteo.com/v1/forecast"
      g = geocoder.ip('me')
      city = g.latlng
-# Параметры запроса для Краснодара
+# Параметры запроса 
      params = {
-     "latitude": city[0],       # широта Краснодара
-     "longitude": city[1],      # долгота Краснодара
+     "latitude": city[0],       # широта 
+     "longitude": city[1],      # долгота 
      "daily": "temperature_2m_min,temperature_2m_max,precipitation_sum", # минимальная и максимальная температура, сумма осадков
      "timezone": "Europe/Moscow" } # временная зона для Краснодара 
      response = requests.get(BASE_URL, params=params)
@@ -447,7 +447,7 @@ def send_mail():
 btn_for_email = Button(frame2,text="Send mail", bg='white',highlightthickness=2,bd=1, font=my_font2, command=send_mail )
 btn_for_email.config(highlightbackground = "blue violet", highlightcolor= "blue violet")
 btn_for_email.pack(side=RIGHT, padx=19)
-btn.invoke() #кнопка погоды нажатие
+btn.invoke() #кнопка  нажатие
 print('cick') 
 
 
