@@ -1,10 +1,10 @@
 #Импортируем необходимые модули
-from email.message import EmailMessage
-import ssl
-import smtplib 
-from datetime import *
-from transformers import pipeline
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+from email.message import EmailMessage #Модуль для рассылки e-mail
+import ssl #Модуль для шифрования
+import smtplib #Протокол SMTP для отправки почты
+from datetime import * #Модуль для работы с датой и временем
+from transformers import pipeline #Конвейеры
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM #для NLP модели
 
 #Загружаем настройки
 with open('settings.txt', mode='r') as file:# закоментить
