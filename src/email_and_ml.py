@@ -7,20 +7,20 @@ from transformers import pipeline #Конвейеры
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM #для NLP модели
 
 #Загружаем настройки
-with open('settings.txt', mode='r') as file:# закоментить
-    email = eval(file.read())[0]     # закоментить
+with open('settings.txt', mode='r') as file: #Открываем файл с настройками
+    email = eval(file.read())[0]     #Считываем e-mail получателя из файла
 email_sender = 'anastasiya.schabanowa2014@gmail.com'
 email_password = 'hjmq rhrj kvjc gnjw'
-email_receiver = email               # вставить свой маил
+email_receiver = email               #e-mail получателя
 
-subject = 'Reminder of your task for today'
+subject = 'Reminder of your task for today' #Задаем тему e-mail
 body = ''
-with open('your_story.txt', mode='r') as file:
-    date_in_dict = eval(file.read())[datetime.today().date().strftime('%m/%d/%y')]
+with open('your_story.txt', mode='r') as file: #Открываем файл с задачами
+    date_in_dict = eval(file.read())[datetime.today().date().strftime('%m/%d/%y')] #Считываем задачи
     print('date_in_dict = ',date_in_dict)
-    for index, task in enumerate(date_in_dict,1):
+    for index, task in enumerate(date_in_dict,1): #Цикл формирования текста для перевода
         #print('{task[0]}: {task[-2]}\n', f'{task[0]}: {task[-2]}.')
-        body += f'{index}. {task[0]}: {task[-2]};' #берем текст для модели
+        body += f'{index}. {task[0]}: {task[-2]};' #текст для модели
 #print( body)
 
 #Инициируем модель генерации текста письма для отправки
@@ -37,11 +37,11 @@ generated = ''.join(generated #объединяем текст
 
 #Задаем параметры сообщения e-mail
 em = EmailMessage()
-em['From'] = email_sender
-em['To'] = email_receiver
-em['subject'] = subject
+em['From'] = email_sender #Отправитель
+em['To'] = email_receiver #Получатель
+em['subject'] = subject #Тема письма
 em.set_content(generated) #Текст сообщения
-context = ssl.create_default_context() #
+context = ssl.create_default_context()
 
 #Отправляем письмо
 with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
