@@ -24,15 +24,17 @@ with open('your_story.txt', mode='r') as file:
 #print( body)
 
 #Инициируем модель генерации текста письма для отправки
+#Выбираем модель en-ru "Helsinki-NLP/opus-mt-ru-en"
 tokenizer = AutoTokenizer.from_pretrained("Helsinki-NLP/opus-mt-ru-en")
 model = AutoModelForSeq2SeqLM.from_pretrained("Helsinki-NLP/opus-mt-ru-en")
 
-inp = body
-input_ids = tokenizer(inp, return_tensors="pt").input_ids
-outputs = model.generate(input_ids=input_ids, num_beams=5, num_return_sequences=1)
-generated = tokenizer.batch_decode(outputs, skip_special_tokens=True)[0].split(';')
+inp = body # текстовая строка для перевода en-ru
+input_ids = tokenizer(inp, return_tensors="pt").input_ids # подготовка входных данных для модели
+outputs = model.generate(input_ids=input_ids, num_beams=5, num_return_sequences=1) # генерация перевода
+generated = tokenizer.batch_decode(outputs, skip_special_tokens=True)[0].split(';') # переведенный текст
 print('generated', generated)
-generated = ''.join(generated)
+generated = ''.join(generated #объединяем текст
+
 #Задаем параметры сообщения e-mail
 em = EmailMessage()
 em['From'] = email_sender
